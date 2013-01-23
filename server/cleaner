@@ -1,0 +1,1 @@
+rm -rf  bin && rm -rf  build && rm -rf  lib && rm -rf  *~ && rm -rf  */*~ && rm -rf  */*/*~ && rm -rf  */*/*/*~ && rm -rf  */*/*/*/*~ && rm -rf  */*/*/*/*/*~ && rm -rf  *.o && rm -rf  */*.o && rm -rf  */*/*.o && rm -rf  */*/*/*.o && rm -rf  */*/*/*/*.o && rm -rf  */*/*/*/*/*.o
