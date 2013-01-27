@@ -5,7 +5,7 @@
 // Login   <bourel_c@epitech.net>
 // 
 // Started on  Wed Dec 19 18:25:55 2012 cybil bourely
-// Last update Sun Jan 20 16:33:27 2013 luca savarino
+// Last update Sun Jan 27 19:22:40 2013 luca savarino
 //
 
 #ifndef		ROOMMANAGER_HPP__
@@ -54,14 +54,6 @@ namespace manageroom
 
     RoomManager			&operator=(const RoomManager &);
 
-    void			createRoom(clientType &);
-    void			haveToDeleteRoom(clientType &);
-    void			haveToLaunch(clientType &);
-    void			sendDataRoom(clientType &);
-    void			addClient(clientType &);
-    void			notify(clientType &);
-    bool			getIsRunning();
-    void			setIsRunning(bool);
     void			cycle();
   };
 

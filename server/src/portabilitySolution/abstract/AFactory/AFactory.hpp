@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Dec 19 15:56:28 2012 luca savarino
-// Last update Wed Jan 16 12:39:57 2013 luca savarino
+// Last update Sun Jan 27 18:57:35 2013 luca savarino
 //
 
 #ifndef	AFACTORY__
@@ -24,8 +24,6 @@ namespace creation
     typedef Factory::SocketTCP	SocketTCP;
     typedef Factory::SocketUDP	SocketUDP;
     typedef Factory::Thread	Thread;
-    typedef Factory::Timer	Timer;
-    typedef Factory::Loader	Loader;
 
     static	condvar::ICondVar	*	getCondVar();
     static	mutex::IMutex		*	getMutex();
@@ -40,8 +38,6 @@ namespace creation
   typedef AFactory::SocketTCP		SocketTCP;
   typedef AFactory::SocketUDP		SocketUDP;
   typedef AFactory::Thread		Thread;
-  typedef AFactory::Timer	Timer;
-  typedef AFactory::Loader	Loader;
 }
 
 #endif

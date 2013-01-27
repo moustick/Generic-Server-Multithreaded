@@ -5,14 +5,12 @@
 // Login   <bourel_c@epitech.net>
 // 
 // Started on  Wed Dec 19 19:10:38 2012 cybil bourely
-// Last update Sun Jan 20 17:33:50 2013 luca savarino
+// Last update Sun Jan 27 19:15:23 2013 luca savarino
 //
 
 #include <iostream>
 #include "Client.hpp"
 #include "IObserver.hpp"
-#include "Protocol.hpp"
-#include "Serialize.hpp"
 
 using namespace network;
 
@@ -78,7 +76,7 @@ Protocol::Packet	*	Client::frontPacketOut()
   Protocol::Packet	*ret;
 
   _mutex->lock();
-  ret = new Protocol::Packet(*_msgQueueOut.front());
+  // ret = new Protocol::Packet(*_msgQueueOut.front());
   _mutex->unlock();
   return (ret);
 }
@@ -88,7 +86,7 @@ Protocol::Packet	*	Client::frontPacketIn()
   Protocol::Packet	*ret;
 
   _mutex->lock();
-  ret = new Protocol::Packet(*_msgQueueIn.front());
+  // ret = new Protocol::Packet(*_msgQueueIn.front());
   _mutex->unlock();
   return (ret);
 }

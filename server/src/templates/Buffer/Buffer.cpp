@@ -8,7 +8,9 @@ using namespace buffer;
 char *Buffer::createElem()
 {
   char *b = new char[_allocSize];
+  
   memset(b, 0, sizeof(char) * _allocSize);
+  return(b);
 }
 
 Buffer::Buffer(int allocSize)
@@ -30,7 +32,7 @@ unsigned int Buffer::getSingleSize() const
 
 std::string & Buffer::getPiece(std::string & buffer, int size)
 {
-  int	rest, restB = 0;
+  int	rest = 0;
   int tmpRead = _indexRead;
   int tmpWrite = _indexWrite;
 
@@ -76,7 +78,7 @@ void Buffer::push(std::string & buffer)
 
 std::string & Buffer::pop(std::string & buffer, int size)
 {
-  int	rest, restB = 0;
+  int	rest = 0;
 
   if (_buffList.front() == _buffList.back() && _indexRead >= _indexWrite)
     {

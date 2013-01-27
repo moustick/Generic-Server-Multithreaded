@@ -13,10 +13,11 @@ set(CMAKE_LIBRARY_PATH ..)
 
 set (Src "src")
 
-set (Classes			"${src}/classes")
-    set (ARoom    		"${Classes}/ARoom")
-    set (Client    		"${Classes}/Client")
-    set (RoomManager		"${Classes}/RoomManager")
+set (Classes			"${Src}/classes")
+##    set (ARoom    		"${Classes}/ARoom")
+##    set (Client    		"${Classes}/Client")
+##    set (RoomManager		"${Classes}/RoomManager")
+##    set (Server   		"${Classes}/Server")
     set (ThreadPool   		"${Classes}/ThreadPool")
 
 set (Mains			"${Src}/mains")
@@ -34,14 +35,16 @@ set (PortabilitySolution	"${Src}/portabilitySolution")
  	       set (LinuxCondVar   	"${LinuxFactory}/LinuxCondVar")
  	       set (LinuxMutex   	"${LinuxFactory}/LinuxMutex")
  	       set (LinuxSocket   	"${LinuxFactory}/LinuxSocket")
+	       	   set (LinuxSocketTCP  "${LinuxSocket}/LinuxSocketTCP")
+	       	   set (LinuxSocketUDP  "${LinuxSocket}/LinuxSocketUDP")
  	       set (LinuxThread   	"${LinuxFactory}/LinuxThread")
         set (WindowsFactory   	"${Concret}/WindowsFactory")
  	       set (WindowsCondVar   	"${WindowsFactory}/WindowsCondVar")
  	       set (WindowsMutex   	"${WindowsFactory}/WindowsMutex")
  	       set (WindowsSocket   	"${WindowsFactory}/WindowsSocket")
+	       	   set (WindowsSocketTCP  "${WindowsSocket}/WindowsSocketTCP")
+	       	   set (WindowsSocketUDP  "${WindowsSocket}/WindowsSocketUDP")
  	       set (WindowsThread   	"${WindowsFactory}/WindowsThread")
-
-set (Server			"${Src}/Server")
 
 set (Templates			"${Src}/templates")
     set (Buffer    		"${Templates}/Buffer")
@@ -76,6 +79,8 @@ include_directories(
 	${WindowsFactory}
  	${WindowsMutex}
  	${WindowsSocket}
+ 	${WindowsSocketTCP}
+ 	${WindowsSocketUDP}
  	${WindowsThread}
 )
 elseif(UNIX)
@@ -84,6 +89,8 @@ include_directories(
 	${LinuxFactory}
  	${LinuxMutex}
  	${LinuxSocket}
+ 	${LinuxSocketTCP}
+ 	${LinuxSocketUDP}
  	${LinuxThread}
 )
 endif()
@@ -92,29 +99,62 @@ endif()
 
 file(
 	GLOB
+	srcs
+
 	${AFactory}/AFactory.cpp
+	${AFactory}/AFactory.hpp
+	${AFactory}/Factories.hpp
 
-	${AFactory}/AFactory.hh
+	${AThread}/AThread.cpp
+	${AThread}/AThread.hpp
 
-	${AThread}
-	${ARoom}
-	${Buffer}
-	${Client}
-	${Functor}
-	${ICondvar}
-	${IMutex}
-	${InstanceCounter}
-	${ISocket}
-	${ReferenceCounter}
-	${RoomManager}
-	${Server}
-	${SharedPointer}
-	${ThreadPool}
+	${ARoom}/ARoom.cpp
+	${ARoom}/ARoom.hpp
+
+	${Buffer}/Buffer.cpp
+	${Buffer}/Buffer.hpp
+
+	${Client}/Client.cpp
+	${Client}/Client.hpp
+
+	${Functor}/Functor.cpp
+	${Functor}/Functor.hpp
+
+	${ICondvar}/ICondvar.cpp
+	${ICondvar}/ICondvar.hpp
+
+	${IMutex}/IMutex.cpp
+	${IMutex}/IMutex.hpp
+
+	${InstanceCounter}/InstanceCounter.cpp
+	${InstanceCounter}/InstanceCounter.hpp
+
+	${ISocket}/ISocket.cpp
+	${ISocket}/ISocket.hpp
+
+	${ReferenceCounter}/ReferenceCounter.cpp
+	${ReferenceCounter}/ReferenceCounter.hpp
+
+	${RoomManager}/RoomManager.cpp
+	${RoomManager}/RoomManager.hpp
+
+	${Server}/Server.cpp
+	${Server}/Server.hpp
+
+	${SharedPointer}/SharedPointer.cpp
+	${SharedPointer}/SharedPointer.hpp
+
+	${ThreadPool}/ThreadPool.cpp
+	${ThreadPool}/ThreadPool.hpp
 )
 
 if(WIN32)
 file(
 	GLOB
+	srcs
+
+	${srcs}
+
 	${WindowsCondVar}/WindowsCondVar.cpp
 	${WindowsCondVar}/WindowsCondVar.h
 	${WindowsCondVar}/WindowsCondVar.hh
@@ -136,6 +176,9 @@ file(
 elseif(UNIX)
 file(
 	GLOB
+	srcs
+	${srcs}
+
 	${LinuxCondVar}/LinuxCondVar.cpp
 	${LinuxCondVar}/LinuxCondVar.h
 	${LinuxCondVar}/LinuxCondVar.hh
@@ -158,8 +201,16 @@ endif()
 
 ## Compile Flags
 
-## SET(GCC_COVERAGE_COMPILE_FLAGS "-w -Wall -Werror -Wextra -pedantic")
-## SET( CMAKE_CXX_FLAGS  " ${GCC_COVERAGE_COMPILE_FLAGS}" )
+SET(CMAKE_BUILD_TYPE release)
+SET(CMAKE_CXX_FLAGS_RELEASE "-W -Wall -Werror -Wextra -pedantic -O2")
+
+## ...Finally...
+
+add_executable(
+	R-Type
+	${srcs}
+	${Mains}/main.cpp
+)
 
 ## Components
 
@@ -168,12 +219,6 @@ find_package(
 )
 
 target_link_libraries (
-		      R-Type ${CMAKE_THREAD_LIBS_INIT} ${GCC_COVERAGE_LINK_FLAGS}
-)
-
-## ...Finally...
-
-add_executable(
-	R-Type
-	${srcs}
+		      R-Type
+		      ${CMAKE_THREAD_LIBS_INIT}
 )

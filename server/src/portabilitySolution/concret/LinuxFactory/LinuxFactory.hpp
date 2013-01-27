@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Dec 19 15:40:43 2012 luca savarino
-// Last update Wed Jan 16 12:37:13 2013 luca savarino
+// Last update Sun Jan 27 18:57:56 2013 luca savarino
 //
 
 #ifndef	LINUXFACTORY__
@@ -16,8 +16,6 @@
 #include "LinuxSocketTCP.hpp"
 #include "LinuxSocketUDP.hpp"
 #include "LinuxThread.hpp"
-#include "LinuxClock.hpp"
-#include "DLLoaderUnix.hpp"
 
 namespace creation
 {
@@ -32,8 +30,6 @@ namespace creation
       typedef network::LinuxSocketTCP	SocketTCP;
       typedef network::LinuxSocketUDP	SocketUDP;
       typedef thread::LinuxThread		Thread;
-      typedef dclock::LinuxClock		Timer; //TEST
-      typedef loader::LinuxDllLoader	Loader;
     private :
       LinuxFactory();
     };

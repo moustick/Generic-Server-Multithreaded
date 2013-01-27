@@ -5,7 +5,7 @@
 // Login   <bourel_c@epitech.net>
 // 
 // Started on  Wed Dec 19 18:33:23 2012 cybil bourely
-// Last update Sun Jan 20 16:40:42 2013 luca savarino
+// Last update Sun Jan 27 19:11:47 2013 luca savarino
 //
 
 #ifndef		AROOM_HPP__
@@ -14,7 +14,6 @@
 #include <list>
 #include <string>
 #include <queue>
-#include "Client.hpp"
 #include "Functor.hpp"
 
 namespace network
