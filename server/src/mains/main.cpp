@@ -5,15 +5,15 @@
 // Login   <cottin_j@epitech.net>
 // 
 // Started on  Fri Dec 28 23:26:09 2012 joffrey cottin
-// Last update Sun Jan 27 19:40:38 2013 luca savarino
+// Last update Mon Jan 28 17:36:11 2013 luca savarino
 //
 
-//#include "Server.hpp"
+#include "Server.hpp"
 
 int main()
 {
-  //  network::Server	serv(12346, 12347);
+   network::Server	serv(12346, 12347);
   
-  //  serv.start();
+   serv.start();
   return (0);
 }

@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Jan 16 22:30:57 2013 luca savarino
-// Last update Sun Jan 20 19:07:11 2013 luca savarino
+// Last update Mon Jan 28 17:52:45 2013 luca savarino
 //
 
 #ifndef	SERVER__
@@ -45,7 +45,7 @@ namespace  network
     int				_udpEntryPoint;
     ClientMapType		_ClientMap;
     ClientListType		_ClientList;
-    int				_maxClientNbr;
+    unsigned int		_maxClientNbr;
     manageroom::IObserver *	_roomManager;
 
   private :
@@ -53,18 +53,16 @@ namespace  network
 						     ClientListType::iterator & it);
     Protocol::Packet	*	getNextPacket(buffer::Buffer &buff) const;
     void			setRoomManager(manageroom::IObserver *roomManager);
-    bool			tcpAuthRecv(ClientListType &, ClientListType::iterator &);
-    bool			tcpAuthSend(ClientListType & list, ClientListType::iterator &);
     bool			commonRecvManager(ClientListType &list,
-						  creation::Socket::retFunType &it);
-    bool			commonSendManager(ClientListType &list,
-						  creation::Socket::retFunType &it);
-    bool			tcpRecvManager(ClientListType & list, ClientListType::iterator & it);
+    						  creation::Socket::retFunType &it);
+    // bool			commonSendManager(ClientListType &list,
+    // 						  creation::Socket::retFunType &it);
+    // bool			tcpRecvManager(ClientListType & list, ClientListType::iterator & it);
 
   public :
-    Server(int	tcpEntryPoint	= 7777,
-	   int	udpEntryPoint	= 6666,
-	   int	maxClientNbr	= INT_MAX - 3);
+    Server(int		tcpEntryPoint	= 7777,
+	   int		udpEntryPoint	= 6666,
+	   unsigned int	maxClientNbr	= INT_MAX - 3);
     Server(Server const&);
     ~Server();
 

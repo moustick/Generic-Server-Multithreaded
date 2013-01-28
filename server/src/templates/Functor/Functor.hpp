@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Sat Dec 22 16:47:27 2012 luca savarino
-// Last update Wed Jan 16 14:13:34 2013 luca savarino
+// Last update Mon Jan 28 14:42:58 2013 luca savarino
 //
 
 #ifndef FUNCTOR__
@@ -34,7 +34,7 @@ namespace functor
     public :
       virtual			~INestedFunctor();
 
-      virtual typename type<U>::_t	operator()() = 0;
+      virtual typename type<U>::_t	operator()()	const = 0;
       virtual bool			isCallable()	const = 0;
     };
 
@@ -47,7 +47,7 @@ namespace functor
       Function(expected const&);
       ~Function();
       
-      typename type<U>::_t		operator()();
+      typename type<U>::_t		operator()()	const;
       bool				isCallable()	const;
     };
     template <class Y>
@@ -63,7 +63,7 @@ namespace functor
       Object(Y const&, expected2 const& function = &Y::operator());
       ~Object();
       
-      typename type<U>::_t		operator()();
+      typename type<U>::_t		operator()()	const;
       bool				isCallable()	const;
     };
 
@@ -78,8 +78,8 @@ namespace functor
     ~Functor();
 
     Functor<U ()>		&			operator=(Functor<U ()> const&);
-    typename type<U>::_t				operator()();
-    bool						isCallable();
+    typename type<U>::_t				operator()()	const;
+    bool						isCallable()	const;
   };
 
   template <class T>
@@ -105,7 +105,7 @@ namespace functor
   {}
   
   template <class U>
-  typename type<U>::_t		Functor<U ()>::Function::operator()()
+  typename type<U>::_t		Functor<U ()>::Function::operator()()				const
   {
     if (_function == NULL)
       throw "Trying to call a NULL function";
@@ -113,7 +113,7 @@ namespace functor
   }
 
   template <class U>
-  bool				Functor<U ()>::Function::isCallable()	const
+  bool				Functor<U ()>::Function::isCallable()				const
   {
     return (_function != NULL);
   }
@@ -137,7 +137,7 @@ namespace functor
 
   template <class U>
   template <class Y>
-  typename type<U>::_t			Functor<U ()>::Object<Y>::operator()()
+  typename type<U>::_t			Functor<U ()>::Object<Y>::operator()()			const
   {
     if (_function == NULL)
       throw "Trying to call a NULL Object Member Function";
@@ -184,7 +184,7 @@ namespace functor
   }
 
   template <class U>
-  typename type<U>::_t			Functor<U ()>::operator()()
+  typename type<U>::_t			Functor<U ()>::operator()()	const
   {
     if (_functor == NULL)
       throw "Trying to call a NULL functor";
@@ -192,7 +192,7 @@ namespace functor
   }
 
   template <class U>
-  bool	       	Functor<U ()>::isCallable()
+  bool	       	Functor<U ()>::isCallable()	const
   {
     return (_functor != NULL && _functor->isCallable());
   }

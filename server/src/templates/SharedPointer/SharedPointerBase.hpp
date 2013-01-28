@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Sat Dec 22 16:47:27 2012 luca savarino
-// Last update Sun Dec 23 03:32:55 2012 luca savarino
+// Last update Mon Jan 28 14:37:00 2013 luca savarino
 //
 
 #ifndef SHAREDPOINTERBASE__
@@ -29,10 +29,10 @@ namespace smartpointer
     ~SharedPointerBase();
 
     SharedPointerBase<T>	&	operator=(SharedPointerBase<T> const&);
-    bool				operator==(SharedPointerBase<T> const&);
-    bool				operator==(T const*);
-    bool				operator!=(SharedPointerBase<T> const&);
-    bool				operator!=(T const*);
+    bool				operator==(SharedPointerBase<T> const&)	const;
+    bool				operator==(T const*)	const;
+    bool				operator!=(SharedPointerBase<T> const&)	const;
+    bool				operator!=(T const*)	const;
     T				&	operator*();
     T				const&	operator*()				const;
     T				*	operator->();
@@ -89,25 +89,25 @@ namespace smartpointer
   }
 
   template <class T>
-  bool					SharedPointerBase<T>::operator==(SharedPointerBase<T> const& to_cmp)
+  bool					SharedPointerBase<T>::operator==(SharedPointerBase<T> const& to_cmp)	const
   {
     return (to_cmp._ptr == _ptr);
   }
 
   template <class T>
-  bool					SharedPointerBase<T>::operator==(T const* to_cmp)
+  bool					SharedPointerBase<T>::operator==(T const* to_cmp)			const
   {
     return (to_cmp == _ptr);
   }
 
   template <class T>
-  bool					SharedPointerBase<T>::operator!=(SharedPointerBase<T> const& to_cmp)
+  bool					SharedPointerBase<T>::operator!=(SharedPointerBase<T> const& to_cmp)	const
   {
     return (to_cmp._ptr != _ptr);
   }
 
   template <class T>
-  bool					SharedPointerBase<T>::operator!=(T const* to_cmp)
+  bool					SharedPointerBase<T>::operator!=(T const* to_cmp)			const
   {
     return (to_cmp != _ptr);
   }

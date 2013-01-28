@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Mon Jan 14 01:45:36 2013 luca savarino
-// Last update Sun Jan 20 22:16:41 2013 luca savarino
+// Last update Mon Jan 28 15:25:29 2013 luca savarino
 //
 
 #include <sys/select.h>
@@ -46,45 +46,9 @@ int				ALinuxSocket::getFd()	const
   return (_fd);
 }
 
-int				ALinuxSocket::getMaxFd(listType	& toSelectList)
-{
-  int				ret = 0, currFd, i;
-  listType::const_iterator	it;
-
-  for (it = toSelectList.begin(); it != toSelectList.end(); ++it)
-    if (testSets((*it)->_sets))
-      {
-	currFd = (*it)->_fd;
-	if (currFd > ret)
-	  ret = (*it)->_fd;
-      }
-  return (ret);
-}
-
 void				ALinuxSocket::initAddrinfo()
 {
   memset(&_hints, 0, sizeof(_hints));
-}
-
-int				ALinuxSocket::initSets(listType	const& toSelectList,
-						       std::vector<fd_set> & sets)
-{
-  int				ret = 0, currFd, i;
-  listType::const_iterator	it;
-
-  for (i = 0; i < sets.size(); ++i)
-    FD_ZERO(&(sets[i]));
-  for (it = toSelectList.begin(); it != toSelectList.end(); ++it)
-    if (testSets((*it)->_sets))
-      {
-	currFd = (*it)->_fd;
-	if (currFd > ret)
-	  ret = (*it)->_fd;
-	for (i = 0; i < sets.size(); ++i)
-	  if ((*it)->_sets[i].isCallable())
-	    FD_SET((*it)->_fd, &sets[i]);
-      }
-  return (ret);
 }
 
 bool				ALinuxSocket::getaddrinfo(std::string const& where,
@@ -121,48 +85,7 @@ void				ALinuxSocket::setSets(setsType & sets)
   _sets = sets;
 }
 
-bool				ALinuxSocket::testSets(setsType & sets)
+ALinuxSocket::setsType		const&	ALinuxSocket::getSets()		const
 {
-  int				i;
-  
-  for (i = 0; i < sets.size(); ++i)
-    if (sets[i].isCallable())
-      return (true);
-  return (false);
-}
-
-bool				ALinuxSocket::select(listType	& toSelectList, callbackType & callback)
-{
-  int				maxFd, selected, i, prevSize = toSelectList.size();
-  std::vector<fd_set>		sets(3);
-  listType::iterator		it;
-  functorType			tmp;
-  
-  while (1)
-    {
-      maxFd = initSets(toSelectList, sets) + 1;
-      if ((selected = ::select(maxFd, &sets[0], &sets[1], &sets[2], NULL)) == -1)
-	{
-	  std::cerr << "select error" << std::endl;
-	  return (false);
-	}
-      for (it = toSelectList.begin();
-      	   selected && it != toSelectList.end();
-      	   ++it)
-      	for(i = 0; i < sets.size(); ++i)
-      	  {
-      	    if ((*it)->_sets[i].isCallable())
-      	      if (FD_ISSET((*it)->_fd, &sets[i]))
-      		{
-		  tmp = (*it)->_sets[i];
-      		  if (!tmp(toSelectList, it))
-		    return (true);
-      		  if (!(--selected) || it == toSelectList.end())
-		    break;
-      		}
-      	  }
-      if (callback.isCallable())
-	callback();
-    }
-  return (true);
+  return (_sets);
 }

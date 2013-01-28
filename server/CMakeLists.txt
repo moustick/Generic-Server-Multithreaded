@@ -17,7 +17,7 @@ set (Classes			"${Src}/classes")
 ##    set (ARoom    		"${Classes}/ARoom")
 ##    set (Client    		"${Classes}/Client")
 ##    set (RoomManager		"${Classes}/RoomManager")
-##    set (Server   		"${Classes}/Server")
+    set (Server   		"${Classes}/Server")
     set (ThreadPool   		"${Classes}/ThreadPool")
 
 set (Mains			"${Src}/mains")
@@ -33,6 +33,7 @@ set (PortabilitySolution	"${Src}/portabilitySolution")
     set (Concret   		"${PortabilitySolution}/concret")
         set (LinuxFactory   	"${Concret}/LinuxFactory")
  	       set (LinuxCondVar   	"${LinuxFactory}/LinuxCondVar")
+ 	       set (LinuxMultiplexer   	"${LinuxFactory}/LinuxMultiplexer")
  	       set (LinuxMutex   	"${LinuxFactory}/LinuxMutex")
  	       set (LinuxSocket   	"${LinuxFactory}/LinuxSocket")
 	       	   set (LinuxSocketTCP  "${LinuxSocket}/LinuxSocketTCP")
@@ -87,6 +88,7 @@ elseif(UNIX)
 include_directories(
 	${LinuxCondVar}
 	${LinuxFactory}
+ 	${LinuxMultiplexer}
  	${LinuxMutex}
  	${LinuxSocket}
  	${LinuxSocketTCP}
@@ -181,21 +183,33 @@ file(
 
 	${LinuxCondVar}/LinuxCondVar.cpp
 	${LinuxCondVar}/LinuxCondVar.h
-	${LinuxCondVar}/LinuxCondVar.hh
+	${LinuxCondVar}/LinuxCondVar.hpp
 
-	${LinuxFactory}/LinuxFactory.hh
+	${LinuxFactory}/LinuxFactory.hpp
+
+ 	${LinuxMultiplexer}/LinuxMultiplexer.cpp
+ 	${LinuxMultiplexer}/LinuxMultiplexer.h
+ 	${LinuxMultiplexer}/LinuxMultiplexer.hpp
 
  	${LinuxMutex}/LinuxMutex.cpp
  	${LinuxMutex}/LinuxMutex.h
- 	${LinuxMutex}/LinuxMutex.hh
+ 	${LinuxMutex}/LinuxMutex.hpp
 
- 	${LinuxSocket}/LinuxSocket.cpp
- 	${LinuxSocket}/LinuxSocket.h
- 	${LinuxSocket}/LinuxSocket.hh
+ 	${LinuxSocket}/ALinuxSocket.cpp
+ 	${LinuxSocket}/ALinuxSocket.h
+ 	${LinuxSocket}/ALinuxSocket.hpp
+
+ 	${LinuxSocketTCP}/ALinuxSocketTCP.cpp
+ 	${LinuxSocketTCP}/ALinuxSocketTCP.h
+ 	${LinuxSocketTCP}/ALinuxSocketTCP.hpp
+
+ 	${LinuxSocketUDP}/ALinuxSocketUDP.cpp
+ 	${LinuxSocketUDP}/ALinuxSocketUDP.h
+ 	${LinuxSocketUDP}/ALinuxSocketUDP.hpp
 
  	${LinuxThread}/LinuxThread.cpp
  	${LinuxThread}/LinuxThread.h
- 	${LinuxThread}/LinuxThread.hh
+ 	${LinuxThread}/LinuxThread.hpp
 )
 endif()
 

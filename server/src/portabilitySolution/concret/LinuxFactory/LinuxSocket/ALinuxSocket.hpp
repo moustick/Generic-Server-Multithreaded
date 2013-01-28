@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Mon Jan 14 01:25:49 2013 luca savarino
-// Last update Sun Jan 20 21:47:38 2013 luca savarino
+// Last update Mon Jan 28 15:27:53 2013 luca savarino
 //
 
 #ifndef	ALINUXSOCKET__
@@ -28,16 +28,15 @@ namespace network
   class ALinuxSocket : public ISocket
   {
   public :
-    typedef	functor::Functor<void ()> callbackType;
-  protected :
-    typedef	bool	(*ptr)(ALinuxSocket &, addrinfo &);
-
-  public :
     typedef	std::list<ALinuxSocket *>		listType;
     typedef	listType::iterator			retFunType;
     typedef	functor::Functor<bool (listType &,
-				       retFunType &)>	functorType;
+    				       retFunType &)>	functorType;
     typedef	std::vector<functorType>		setsType;
+
+  protected :
+    typedef	bool	(*ptr)(ALinuxSocket &, addrinfo &);
+
 
   protected :
     addrinfo	_hints;
@@ -45,12 +44,6 @@ namespace network
 
   private :
     setsType	_sets;
-
-  private :
-    static bool	testSets(setsType &);
-    static int	getMaxFd(listType &);
-    static int	initSets(listType const&,
-			 std::vector<fd_set> &);
 
   protected :
     bool	getaddrinfo(std::string const&,
@@ -63,11 +56,10 @@ namespace network
     ALinuxSocket(setsType const&, int fd = -1);
     virtual	~ALinuxSocket();
 
-    static	bool		select(listType	&, callbackType &);
-    
     ALinuxSocket	&	operator=(ALinuxSocket const&);
 
     void			setSets(setsType & sets);
+    setsType		const&	getSets()		const;
     int				getFd()			const;
 
     virtual void		initAddrinfo();
