@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Jan 16 22:31:08 2013 luca savarino
-// Last update Mon Jan 28 17:54:56 2013 luca savarino
+// Last update Mon Jan 28 22:24:38 2013 luca savarino
 //
 
 #include "LinuxMultiplexer.hpp"
@@ -75,8 +75,8 @@ bool			Server::start()
 					  network::LinuxMultiplexer::callbackType(NULL)));
 }
 
-bool			Server::tcpConnectionManager(ClientListType & list,
-						     ClientListType::iterator & it)
+bool			Server::ConnectionManager(ClientListType & list,
+						  ClientListType::iterator & it)
 {
   creation::Socket::setsType		sets(3, NULL);
   creation::Socket			*socket;
@@ -89,7 +89,7 @@ bool			Server::tcpConnectionManager(ClientListType & list,
 	  delete socket;
 	  return (true);
 	}
-      // sets[0] = ALinuxSocket::functorType(*this, &Server::tcpAuthRecv);
+      sets[0] = ALinuxSocket::functorType(*this, &Server::commonRecvManager);
       socket->setSets(sets);
       list.push_back(socket);
     }

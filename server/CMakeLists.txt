@@ -199,13 +199,13 @@ file(
  	${LinuxSocket}/ALinuxSocket.h
  	${LinuxSocket}/ALinuxSocket.hpp
 
- 	${LinuxSocketTCP}/ALinuxSocketTCP.cpp
- 	${LinuxSocketTCP}/ALinuxSocketTCP.h
- 	${LinuxSocketTCP}/ALinuxSocketTCP.hpp
+ 	${LinuxSocketTCP}/LinuxSocketTCP.cpp
+ 	${LinuxSocketTCP}/LinuxSocketTCP.h
+ 	${LinuxSocketTCP}/LinuxSocketTCP.hpp
 
- 	${LinuxSocketUDP}/ALinuxSocketUDP.cpp
- 	${LinuxSocketUDP}/ALinuxSocketUDP.h
- 	${LinuxSocketUDP}/ALinuxSocketUDP.hpp
+ 	${LinuxSocketUDP}/LinuxSocketUDP.cpp
+ 	${LinuxSocketUDP}/LinuxSocketUDP.h
+ 	${LinuxSocketUDP}/LinuxSocketUDP.hpp
 
  	${LinuxThread}/LinuxThread.cpp
  	${LinuxThread}/LinuxThread.h

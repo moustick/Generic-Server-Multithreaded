@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Sun Jan 13 01:29:01 2013 luca savarino
-// Last update Sun Jan 20 21:58:08 2013 luca savarino
+// Last update Mon Jan 28 21:38:05 2013 luca savarino
 //
 
 #include <unistd.h>
@@ -88,14 +88,16 @@ bool			LinuxSocketTCP::bind(int port, std::string const& where, int backlog)
   if (getaddrinfo(where, oss.str(),
 		  &LinuxSocketTCP::hiddenBind, "bind",
 		  _hints))
-    if (::listen(_fd, backlog) != -1)
-      return (true);
-    else
-      {
-	close(_fd);
-	_fd = -1;
-	std::cerr << "listen error" << std::endl;
-      }
+    {
+      if (::listen(_fd, backlog) != -1)
+	return (true);
+      else
+	{
+	  close(_fd);
+	  _fd = -1;
+	  std::cerr << "listen error" << std::endl;
+	}
+    }
   return (false);
 }
 
@@ -113,7 +115,7 @@ bool			LinuxSocketTCP::connect(int port, std::string const& where)
 int			LinuxSocketTCP::recv(std::string & str, int blockSize)
 {
   int			ret;
-  char			rec[blockSize + 1];
+  char			*rec = new char[blockSize + 1];
 
   if ((ret = ::recv(_fd, rec, blockSize, MSG_NOSIGNAL)) < -1)
     {
@@ -123,6 +125,7 @@ int			LinuxSocketTCP::recv(std::string & str, int blockSize)
     }
   rec[ret + 1] = 0;
   str = rec;
+  delete [] rec;
   return (ret);
 }
 

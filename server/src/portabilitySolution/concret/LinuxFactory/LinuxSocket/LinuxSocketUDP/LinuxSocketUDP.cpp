@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Tue Jan 15 21:58:53 2013 luca savarino
-// Last update Sun Jan 20 20:24:17 2013 luca savarino
+// Last update Mon Jan 28 21:40:40 2013 luca savarino
 //
 
 #include <unistd.h>
@@ -63,7 +63,7 @@ LinuxSocketUDP	&	LinuxSocketUDP::operator=(LinuxSocketUDP const& to_copy)
   return (*this);
 }
 
-bool			LinuxSocketUDP::bind(int port, std::string const& where, int backlog)
+bool			LinuxSocketUDP::bind(int port, std::string const& where, int)
 {
   std::ostringstream oss;
 
@@ -90,7 +90,7 @@ bool			LinuxSocketUDP::connect(int port, std::string const& where)
 int			LinuxSocketUDP::recv(std::string & str, int blockSize)
 {
   int			ret;
-  char			rec[blockSize + 1];
+  char			*rec = new char[blockSize + 1];
 
   if ((ret = ::recv(_fd, rec, blockSize, MSG_NOSIGNAL)) < -1)
     {
@@ -100,6 +100,7 @@ int			LinuxSocketUDP::recv(std::string & str, int blockSize)
     }
   rec[ret + 1] = 0;
   str = rec;
+  delete [] rec;
   return (ret);
 }
 
