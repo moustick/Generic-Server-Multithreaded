@@ -32,7 +32,7 @@ unsigned int Buffer::getSingleSize() const
 
 std::string & Buffer::getPiece(std::string & buffer, int size)
 {
-  int	rest = 0;
+  int rest = 0;
   int tmpRead = _indexRead;
   int tmpWrite = _indexWrite;
 

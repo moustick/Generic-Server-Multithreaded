@@ -48,6 +48,7 @@ set (PortabilitySolution	"${Src}/portabilitySolution")
  	       set (WindowsThread   	"${WindowsFactory}/WindowsThread")
 
 set (Templates			"${Src}/templates")
+    set (Bind    		"${Templates}/Bind")
     set (Buffer    		"${Templates}/Buffer")
     set (Functor    		"${Templates}/Functor")
     set (InstanceCounter    	"${Templates}/InstanceCounter")
@@ -60,6 +61,7 @@ include_directories(
 	${AFactory}
 	${AThread}
 	${ARoom}
+	${Bind}
 	${Buffer}
 	${Client}
 	${Functor}
@@ -113,13 +115,14 @@ file(
 	${ARoom}/ARoom.cpp
 	${ARoom}/ARoom.hpp
 
+	${Bind}/Bind.hpp
+
 	${Buffer}/Buffer.cpp
 	${Buffer}/Buffer.hpp
 
 	${Client}/Client.cpp
 	${Client}/Client.hpp
 
-	${Functor}/Functor.cpp
 	${Functor}/Functor.hpp
 
 	${ICondvar}/ICondvar.cpp
@@ -128,7 +131,6 @@ file(
 	${IMutex}/IMutex.cpp
 	${IMutex}/IMutex.hpp
 
-	${InstanceCounter}/InstanceCounter.cpp
 	${InstanceCounter}/InstanceCounter.hpp
 
 	${ISocket}/ISocket.cpp

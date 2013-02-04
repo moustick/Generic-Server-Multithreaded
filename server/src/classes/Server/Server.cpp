@@ -5,12 +5,13 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Jan 16 22:31:08 2013 luca savarino
-// Last update Mon Jan 28 22:24:38 2013 luca savarino
+// Last update Sun Feb  3 22:41:50 2013 luca savarino
 //
 
 #include "LinuxMultiplexer.hpp"
 #include "Server.hpp"
 
+#include <functional>
 #include <iostream>
 
 using namespace network;
@@ -23,25 +24,25 @@ Server::Server(int tcpEntryPoint,
     _maxClientNbr((maxClientNbr <= (INT_MAX - 3)) ?
 		  maxClientNbr : (INT_MAX - 3))
 {
-  creation::Socket::setsType		sets(3, NULL);
-  creation::SocketTCP			*tcpServer;
-  creation::SocketUDP			*udpServer;
+  SocketType::setsType		sets(3, NULL);
+  SocketTCPType			*tcpServer;
+  SocketUDPType			*udpServer;
 
-  sets[0] = ALinuxSocket::functorType(*this,
-				      &Server::tcpConnectionManager);
-  (tcpServer = new creation::SocketTCP(sets))->bind(tcpEntryPoint);
-  sets[0] = ALinuxSocket::functorType(*this,
+  sets[0] = SocketType::functorType(*this,
+				      &Server::connectionManager);
+  (tcpServer = new SocketTCPType(sets))->bind(tcpEntryPoint);
+  sets[0] = SocketType::functorType(*this,
   				      &Server::commonRecvManager);
-  (udpServer = new creation::SocketUDP(sets))->bind(udpEntryPoint);
-  _ClientList.push_back(tcpServer);
-  _ClientList.push_back(udpServer);
+  (udpServer = new SocketUDPType(sets))->bind(udpEntryPoint);
+  _clientList.push_back(tcpServer);
+  _clientList.push_back(udpServer);
 }
 
 Server::Server(Server const& to_copy)
   : _tcpEntryPoint(to_copy._tcpEntryPoint),
     _udpEntryPoint(to_copy._udpEntryPoint),
-    _ClientMap(to_copy._ClientMap),
-    _ClientList(to_copy._ClientList),
+    _clientList(to_copy._clientList),
+    _clientMap(to_copy._clientMap),
     _maxClientNbr(to_copy._maxClientNbr)
 {}
 
@@ -49,8 +50,8 @@ Server	&	Server::operator=(Server const& to_copy)
 {
   _tcpEntryPoint = to_copy._tcpEntryPoint;
   _udpEntryPoint = to_copy._udpEntryPoint;
-  _ClientList = to_copy._ClientList;
-  _ClientMap = to_copy._ClientMap;
+  _clientList = to_copy._clientList;
+  _clientMap = to_copy._clientMap;
   _maxClientNbr = to_copy._maxClientNbr;
 
   return (*this);
@@ -60,35 +61,39 @@ Server::~Server()
 {
   ClientListType::iterator	it;
 
-  for(it = _ClientList.begin(); it != _ClientList.end(); ++it)
+  for(it = _clientList.begin(); it != _clientList.end(); ++it)
     delete *it;
 }
 
-void		Server::setRoomManager(manageroom::IObserver *roomManager)
-{
-  _roomManager = roomManager;
-}
+// void		Server::setRoomManager(manageroom::IObserver *roomManager)
+// {
+//   _roomManager = roomManager;
+// }
 
 bool			Server::start()
 {
-  return(network::LinuxMultiplexer::start(_ClientList,
+  return(network::LinuxMultiplexer::start(_clientList,
 					  network::LinuxMultiplexer::callbackType(NULL)));
 }
 
-bool			Server::ConnectionManager(ClientListType & list,
+bool			Server::connectionManager(ClientListType & list,
 						  ClientListType::iterator & it)
 {
-  creation::Socket::setsType		sets(3, NULL);
-  creation::Socket			*socket;
+  SocketType::setsType		sets(3, NULL);
+  SocketType			*socket;
+  //Client				*client;
 
   std::cout << "new client" << std::endl;
   if ((socket = static_cast<network::LinuxSocketTCP *>(*it)->accept()) != NULL)
     {
-      if (list.size() == _maxClientNbr)
+      if (list.size() == _maxClientNbr
+	  /*|| (client = new Client) != NULL*/)
 	{
 	  delete socket;
 	  return (true);
 	}
+      //_clientMap[socket] = client;
+      //sets[0] = Bind::bind(&Server::commonRecvManager);
       sets[0] = ALinuxSocket::functorType(*this, &Server::commonRecvManager);
       socket->setSets(sets);
       list.push_back(socket);

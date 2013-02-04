@@ -5,36 +5,36 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Mon Jan 14 05:14:40 2013 luca savarino
-// Last update Mon Jan 14 05:15:10 2013 luca savarino
+// Last update Sat Feb  2 14:03:55 2013 luca savarino
 //
 
 #ifndef TYPE__
 # define TYPE__
 
-namespace functor
+namespace type
 {
     template <class T2, bool U2>
-    struct	type_base
+    struct	Type_base
     {};
 
     template <class T2>
-    struct	type_base<T2, true>
+    struct	Type_base<T2, true>
     {
       typedef	T2	&	_t;
       typedef	T2	const&	_const_t;
     };
     template <class T2>
-    struct	type_base<T2, false>
+    struct	Type_base<T2, false>
     {
       typedef 	T2		_t;
       typedef 	T2	const	_const_t;
     };
 
     template <class T2>
-    struct	type : public type_base<T2, (sizeof(T2) > sizeof(int))>
+    struct	Type : public Type_base<T2, (sizeof(T2) > sizeof(int))>
     {};
     template <>
-    struct	type<void>
+    struct	Type<void>
     {
       typedef	void		_t;
     };

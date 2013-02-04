@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Wed Jan 16 22:30:57 2013 luca savarino
-// Last update Mon Jan 28 17:52:45 2013 luca savarino
+// Last update Sun Feb  3 19:37:54 2013 luca savarino
 //
 
 #ifndef	SERVER__
@@ -16,43 +16,34 @@
 
 #include "AFactory.hpp"
 
-namespace buffer
-{
-  struct Buffer;
-}
-
-namespace Protocol
-{
-  struct Packet;
-}
-
-namespace manageroom
-{
-  class	IObserver;
-}
+// namespace manageroom
+// {
+//   class	IObserver;
+// }
 
 namespace  network
 {
   class Client;
   class Server
   {
-    typedef	std::pair<int, Client*>		ClientPairType;
-    typedef	std::map<int, Client*>		ClientMapType;
-    typedef	creation::Socket::listType	ClientListType;
+    typedef	creation::SocketUDP		SocketUDPType;
+    typedef	creation::SocketTCP		SocketTCPType;
+    typedef	creation::Socket		SocketType;
+    typedef	std::list<SocketType *>		ClientListType;
+    typedef	std::map<SocketType *, Client*>	ClientMapType;
 
   private :
     int				_tcpEntryPoint;
     int				_udpEntryPoint;
-    ClientMapType		_ClientMap;
-    ClientListType		_ClientList;
+    ClientListType		_clientList;
+    ClientMapType		_clientMap;
     unsigned int		_maxClientNbr;
-    manageroom::IObserver *	_roomManager;
+    //manageroom::IObserver *	_roomManager;
 
   private :
-    bool			tcpConnectionManager(ClientListType & list,
-						     ClientListType::iterator & it);
-    Protocol::Packet	*	getNextPacket(buffer::Buffer &buff) const;
-    void			setRoomManager(manageroom::IObserver *roomManager);
+    bool			connectionManager(ClientListType & list,
+						  ClientListType::iterator & it);
+    // void			setRoomManager(manageroom::IObserver *roomManager);
     bool			commonRecvManager(ClientListType &list,
     						  creation::Socket::retFunType &it);
     // bool			commonSendManager(ClientListType &list,

@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Sat Dec 22 16:47:27 2012 luca savarino
-// Last update Mon Jan 28 14:41:36 2013 luca savarino
+// Last update Sat Feb  2 14:03:11 2013 luca savarino
 //
 
 #ifndef FUNCTOR_2__
@@ -20,7 +20,7 @@ namespace functor
   {
   public :
 
-    typedef	typename type<U>::_t	(*expected)(typename type<V>::_t, typename type<V2>::_t);
+    typedef	typename type::Type<U>::_t	(*expected)(typename type::Type<V>::_t, typename type::Type<V2>::_t);
 
   private :
     class INestedFunctor
@@ -28,7 +28,7 @@ namespace functor
     public :
       virtual			~INestedFunctor();
 
-      virtual typename type<U>::_t	operator()(typename type<V>::_t, typename type<V2>::_t)				    const = 0;
+      virtual typename type::Type<U>::_t	operator()(typename type::Type<V>::_t, typename type::Type<V2>::_t)				    const = 0;
       virtual bool			isCallable()	const = 0;
     };
 
@@ -41,14 +41,14 @@ namespace functor
       Function(expected const&);
       ~Function();
       
-      typename type<U>::_t		operator()(typename type<V>::_t, typename type<V2>::_t)				    const;
+      typename type::Type<U>::_t		operator()(typename type::Type<V>::_t, typename type::Type<V2>::_t)				    const;
       bool				isCallable()	const;
     };
     template <class Y>
     class Object : public INestedFunctor
     {
     public :
-      typedef typename type<U>::_t		(Y::*expected2)(typename type<V>::_t, typename type<V2>::_t);
+      typedef typename type::Type<U>::_t		(Y::*expected2)(typename type::Type<V>::_t, typename type::Type<V2>::_t);
     private :
       Y		const			*_object;
       expected2				_function;
@@ -57,7 +57,7 @@ namespace functor
       Object(Y const&, expected2 const& function = &Y::operator());
       ~Object();
       
-      typename type<U>::_t		operator()(typename type<V>::_t, typename type<V2>::_t)				    const;
+      typename type::Type<U>::_t		operator()(typename type::Type<V>::_t, typename type::Type<V2>::_t)				    const;
       bool				isCallable()	const;
     };
 
@@ -69,11 +69,11 @@ namespace functor
     Functor(expected const&);
     template <class X>
     Functor(X & object, 
-	    typename type<U>::_t  (X::*function)(typename type<V>::_t, typename type<V2>::_t) = &X::operator());
+	    typename type::Type<U>::_t  (X::*function)(typename type::Type<V>::_t, typename type::Type<V2>::_t) = &X::operator());
     ~Functor();
 
     Functor<U (V, V2)>		&			operator=(Functor<U (V, V2)> const&);
-    typename type<U>::_t				operator()(typename type<V>::_t, typename type<V2>::_t)		    const;
+    typename type::Type<U>::_t				operator()(typename type::Type<V>::_t, typename type::Type<V2>::_t)		    const;
     bool						isCallable()	const;
   };
 
@@ -96,7 +96,7 @@ namespace functor
   {}
   
   template <class U, class V, class V2>
-  typename type<U>::_t			Functor<U (V, V2)>::Function::operator()(typename type<V>::_t a, typename type<V2>::_t b)                                   const
+  typename type::Type<U>::_t			Functor<U (V, V2)>::Function::operator()(typename type::Type<V>::_t a, typename type::Type<V2>::_t b)                                   const
   {
     if (_function == NULL)
       throw "Trying to call a NULL function";
@@ -128,7 +128,7 @@ namespace functor
 
   template <class U, class V, class V2>
   template <class Y>
-  typename type<U>::_t			Functor<U (V, V2)>::Object<Y>::operator()(typename type<V>::_t a, typename type<V2>::_t b)                                              const
+  typename type::Type<U>::_t			Functor<U (V, V2)>::Object<Y>::operator()(typename type::Type<V>::_t a, typename type::Type<V2>::_t b)                                              const
   {
     if (_function == NULL)
       throw "Trying to call a NULL Object Member Function";
@@ -163,7 +163,7 @@ namespace functor
   
   template <class U, class V, class V2>
   template <class X>
-  Functor<U (V, V2)>::Functor(X & object, typename type<U>::_t  (X::*function)(typename type<V>::_t, typename type<V2>::_t))
+  Functor<U (V, V2)>::Functor(X & object, typename type::Type<U>::_t  (X::*function)(typename type::Type<V>::_t, typename type::Type<V2>::_t))
     : _functor(new Object<X>(object, function))
   {}
 
@@ -175,7 +175,7 @@ namespace functor
   }
 
   template <class U, class V, class V2>
-  typename type<U>::_t			Functor<U (V, V2)>::operator()(typename type<V>::_t a, typename type<V2>::_t b)	const
+  typename type::Type<U>::_t			Functor<U (V, V2)>::operator()(typename type::Type<V>::_t a, typename type::Type<V2>::_t b)	const
   {
     if (_functor == NULL)
       throw "Trying to call a NULL functor";

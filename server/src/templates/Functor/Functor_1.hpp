@@ -5,7 +5,7 @@
 // Login   <savari_l@epitech.net>
 // 
 // Started on  Sat Dec 22 16:47:27 2012 luca savarino
-// Last update Mon Jan 28 14:44:18 2013 luca savarino
+// Last update Sat Feb  2 14:03:00 2013 luca savarino
 //
 
 #ifndef FUNCTOR_1__
@@ -20,7 +20,7 @@ namespace functor
   {
   public :
 
-    typedef	typename type<U>::_t	(*expected)(typename type<V>::_t);
+    typedef	typename type::Type<U>::_t	(*expected)(typename type::Type<V>::_t);
 
   private :
     class INestedFunctor
@@ -28,7 +28,7 @@ namespace functor
     public :
       virtual			~INestedFunctor();
 
-      virtual typename type<U>::_t	operator()(typename type<V>::_t)						    const = 0;
+      virtual typename type::Type<U>::_t	operator()(typename type::Type<V>::_t)						    const = 0;
       bool				isCallable()	const = 0;
     };
 
@@ -41,14 +41,14 @@ namespace functor
       Function(expected const&);
       ~Function();
       
-      typename type<U>::_t		operator()(typename type<V>::_t)						    const;
+      typename type::Type<U>::_t		operator()(typename type::Type<V>::_t)						    const;
       bool				isCallable()	const;
     };
     template <class Y>
     class Object : public INestedFunctor
     {
     public :
-      typedef typename type<U>::_t		(Y::*expected2)(typename type<V>::_t);
+      typedef typename type::Type<U>::_t		(Y::*expected2)(typename type::Type<V>::_t);
     private :
       Y		const			*_object;
       expected2				_function;
@@ -57,7 +57,7 @@ namespace functor
       Object(Y const&, expected2 const& function = &Y::operator());
       ~Object();
       
-      typename type<U>::_t		operator()(typename type<V>::_t)						    const;
+      typename type::Type<U>::_t		operator()(typename type::Type<V>::_t)						    const;
       bool				isCallable()	const;
     };
 
@@ -68,11 +68,11 @@ namespace functor
     Functor(Functor<U (V)> const&);
     Functor(expected const&);
     template <class X>
-    Functor(X & object, typename type<U>::_t  (X::*function)(typename type<V>::_t) = &X::operator());
+    Functor(X & object, typename type::Type<U>::_t  (X::*function)(typename type::Type<V>::_t) = &X::operator());
     ~Functor();
 
     Functor<U (V)>		&			operator=(Functor<U (V)> const&);
-    typename type<U>::_t				operator()(typename type<V>::_t)				 const;
+    typename type::Type<U>::_t				operator()(typename type::Type<V>::_t)				 const;
     bool						isCallable()	const;
   };
 
@@ -95,7 +95,7 @@ namespace functor
   {}
   
   template <class U, class V>
-  typename type<U>::_t		Functor<U (V)>::Function::operator()(typename type<V>::_t a)				    const
+  typename type::Type<U>::_t		Functor<U (V)>::Function::operator()(typename type::Type<V>::_t a)				    const
   {
     if (_function == NULL)
       throw "Trying to call a NULL function";
@@ -127,7 +127,7 @@ namespace functor
 
   template <class U, class V>
   template <class Y>
-  typename type<U>::_t			Functor<U (V)>::Object<Y>::operator()(typename type<V>::_t a)		const
+  typename type::Type<U>::_t			Functor<U (V)>::Object<Y>::operator()(typename type::Type<V>::_t a)		const
   {
     if (_function == NULL)
       throw "Trying to call a NULL Object Member Function";
@@ -136,7 +136,7 @@ namespace functor
 
   template <class U, class V>
   template <class Y>
-  typename type<U>::_t			Functor<U (V)>::Object<Y>::isCallable()	const
+  typename type::Type<U>::_t			Functor<U (V)>::Object<Y>::isCallable()	const
   {
     return (_object != NULL && _function != NULL);
   }
@@ -162,7 +162,7 @@ namespace functor
   
   template <class U, class V>
   template <class X>
-  Functor<U (V)>::Functor(X & object, typename type<U>::_t  (X::*function)(typename type<V>::_t))
+  Functor<U (V)>::Functor(X & object, typename type::Type<U>::_t  (X::*function)(typename type::Type<V>::_t))
     : _functor(new Object<X>(object, function))
   {}
 
@@ -174,7 +174,7 @@ namespace functor
   }
 
   template <class U, class V>
-  typename type<U>::_t			Functor<U (V)>::operator()(typename type<V>::_t a)				const
+  typename type::Type<U>::_t			Functor<U (V)>::operator()(typename type::Type<V>::_t a)				const
   {
     if (_functor == NULL)
       throw "Trying to call a NULL functor";
